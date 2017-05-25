@@ -41,17 +41,19 @@ class RevealCardComponent extends HTMLElement {
         this.setState({dir})
         const interval = setInterval(()=>{
             this.draw()
-            this.setState({y:this.state.y +(0.8*this.state.h/5)*this.state.dir})
+            this.setState({y:this.state.y +((0.8*this.state.h)/5)*this.state.dir})
             console.log(this.state.y)
             //this.state.y += this.state.h/10*this.state.dir
             if(this.state.y < 0) {
-
+                this.revealButton.reset(this.state.dir)
                 this.setState({y:0,dir:0})
                 //this.state.dir = 0
                 clearInterval(interval)
             }
             if(this.state.y>0.8*this.state.h) {
+              this.revealButton.reset(this.state.dir)
               this.setState({y:0.8*this.state.h,dir:0})
+
               //this.state.dir = 0
               clearInterval(interval)
             }
@@ -102,6 +104,14 @@ class RevealButton {
             context.restore()
         }
         this.deg += dir*9
+    }
+    reset(dir) {
+        if(dir == -1) {
+            this.deg = -45
+        }
+        else {
+            this.deg = 0
+        }
     }
     handleTap(x,y) {
         console.log(this.x+" "+this.y)
